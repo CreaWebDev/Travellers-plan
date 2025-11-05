@@ -48,12 +48,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, defineAsyncComponent } from "vue";
 import { collection, setDoc, doc, onSnapshot, Timestamp, QuerySnapshot, DocumentData, QueryDocumentSnapshot, deleteDoc } from '@firebase/firestore';
 import { db } from '@/firebase';
 import { getCookie, setCookie, deleteCookie } from '@/composables/useCookie';
-import MapNZ from "@/components/map/MapNZ.vue";
-import LoginForm from '@/components/LoginForm.vue';
+
+// Lazy load heavy components
+const MapNZ = defineAsyncComponent(() => import("@/components/map/MapNZ.vue"));
+const LoginForm = defineAsyncComponent(() => import('@/components/LoginForm.vue'));
 
 type Spot = { id: string; lat: number; lng: number; title: string; description?: string; createdBy?: string; createdAt?: Date; isDuplicate?: boolean };
 
